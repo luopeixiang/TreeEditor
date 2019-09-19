@@ -1,0 +1,21 @@
+{
+    "name": "实体",
+    "children": [
+        {
+            "name": "人员",
+            "children": [
+                {
+                    "name": "员工"
+                },
+                {
+                    "name": "客户"
+                }
+            ]
+        },
+        {
+            "name": "银行"
+        }
+    ],
+    "attributes": [],
+    "_children": null
+}

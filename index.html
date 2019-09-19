@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="utf-8">
+        <title>工行schema编辑 </title>
+        <link rel="stylesheet" href="css/foundation.css" />
+        <link rel="stylesheet" href="css/d3-context-menu.css" />
+        <link rel="stylesheet" href="css/toastr.css" />
+        <link rel="stylesheet" href="css/app.css" />
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+
+
+        <!-- <div class="row">
+                <div class="large-10 columns">
+                        <ul class="button-group radius even-3">
+                                <li><a href="#" class="button small radius success" onclick="save_tree()">保存修改</a></li>
+                                <li><a href="/tree/file" class="button small radius info">Download JSON tree file</a></li>
+                                <li><a href="#" class="button small radius info" data-reveal-id="UploadFileModal">Upload JSON tree file</a></li>
+                        </ul>
+                </div>
+                <div class="large-2 columns">
+                </div>
+        </div> -->
+        <!-- 方案二 右上角固定区域查看属性 -->
+        <div class="row">
+          <div id="tree-container" class="col-md-8"></div>
+          <div  id="shuxing" class="col-md-4">
+            <div class="attr_layer">
+
+                <div class="label" ><h6 id='cate_name'>类的固有属性</h6> </div>
+
+                <table class="table" id="attr_table">
+                    <thead>
+                        <tr><th>属性名</th><th>类</th><th>型</th><th>操作</th></tr>
+                    </thead>
+                    <tbody class="attr_table_body"></tbody>
+                    <!-- <tfoot>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button>增加属性</button></td>
+                      </tr>
+                    </tfoot> -->
+                </table>
+            </div>
+
+        </div>
+        </div>
+
+        <!-- <li><a href="/tree/file" class="button small radius info">Download JSON tree file</a></li>
+        <li><a href="#" class="button small radius info" data-reveal-id="UploadFileModal">Upload JSON tree file</a></li> -->
+        <!-- <button type="button" class="btn btn-success" onclick="save_tree()" id="save_edit">保存修改</button>
+        <button type="button" class="btn btn-info" href="/tree/file" id="export_json">导出文件</button>
+        <button type="button" class="btn btn-default" onclick="" id="import_json">导入文件</button> -->
+
+
+        <div id="options">
+        <ul  class="stack button-group">
+                <!-- <li id="save_edit"><a href="#" class="button small radius success" onclick="save_tree()">保存修改</a></li> -->
+                <!-- <li id="export_json"><a href="/tree/file" class="button small radius info" onclick="save_tree()">导出文件</a></li> -->
+                <li><a href="#" id="move_node" class="button small radius default" onclick="toggle_drag()">触发移动节点</a></li>
+                <li id="export_json"><a href="#" class="button small radius info" onclick="exportToJson('schema.json',tree_root)">导出文件</a></li>
+                <li id="import_json"><a href="#" class="button small radius info" data-reveal-id="UploadFileModal" onclick="location.reload()">新建树形图</a></li>
+                <!-- <li id="import_json"><a href="#" class="button small radius info" onclick="import_file()">上传文件</a></li> -->
+        </ul>
+      </div>
+
+
+
+
+        <div id="RenameNodeModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+          <h2 id="modalTitle">重命名节点</h2>
+          <form>
+            <div class="row">
+              <div class="large-12 columns">
+                <label>节点名称
+                  <input type="text" class="inputName" id='RenameNodeName' placeholder="node name" />
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-8 columns">
+                &nbsp;
+              </div>
+              <div class="large-4 columns">
+                <a href="#" class="button info" onclick="close_modal()">取消</a>
+                <a href="#" class="button success" onclick="rename_node()">重命名</a>
+              </div>
+            </div>
+          </form>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+        <div id="CreateNodeModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+          <h2 id="modalTitle">新建节点</h2>
+          <form>
+            <div class="row">
+              <div class="large-12 columns">
+                <label>节点名称
+                  <input type="text" class="inputName" id='CreateNodeName' placeholder="请输入节点名称" />
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-8 columns">
+                &nbsp;
+              </div>
+              <div class="large-4 columns">
+                <a href="#" class="button info" onclick="close_modal()">取消</a>
+                <a href="#" class="button success" onclick="create_node()">创建</a>
+              </div>
+            </div>
+          </form>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
+        <div id="UploadFileModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+          <h2 id="modalTitle">上传JSON文件</h2>
+            <div class="row">
+              <div class="large-12 columns">
+                <label>您上传的文件：
+                        <input type="file" id="fileinput" name="jsonfile" accept="application/json">
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-12 columns">
+                <a href="#" class="button info" onclick="close_modal()">取消</a>
+                <input onclick="loadFile()" class="button success" value="从该文件构建节点">
+                  <input onclick="init_one_node()" class="button success" value="初始化单节点">
+              </div>
+            </div>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
+        <!-- 增加属性 -->
+        <div id="CreateAtt" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+          <h2 id="CreatAtt_Title">新建当前节点属性</h2>
+          <form>
+            <div class="row">
+              <div class="large-4 columns">
+                <label>属性名
+                  <input type="text" class="att_name" id='att_name' placeholder="请输入节点名称" />
+                </label>
+              </div>
+              <div class="large-4 columns">
+                <label>类
+                  <!-- <input type="text" class="att_lei" id='att_lei' placeholder="请输入类" /> -->
+                  <select id='att_lei'>
+                    <option value="单值类">单值类</option>
+                    <option value="枚举类">枚举类</option>
+                  </select>
+                </label>
+              </div>
+              <div class="large-4 columns">
+                <label>型
+                  <!-- <input type="text" class="att_xing" id='att_xing' placeholder="请输入型" /> -->
+                  <select id='att_xing'>
+                    <option value="对象型">对象型</option>
+                    <option value="字符串型">字符串型</option>
+                    <option value="日期型">日期型</option>
+                    <option value="数值型">数值型</option>
+                  </select>
+                </label>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="large-8 columns">
+                &nbsp;
+              </div>
+              <div class="large-4 columns">
+                <a href="#" class="button info" onclick="close_modal()">取消</a>
+                <a href="#" class="button success" onclick="create_node_att()">创建</a>
+              </div>
+            </div>
+          </form>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
+
+        <!-- 编辑节点 -->
+        <div id="EditAtt" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+          <h2 id="EditAtt_Title">编辑当前节点属性</h2>
+          <form>
+            <div class="row">
+              <div class="large-4 columns">
+                <label>属性名
+                  <input type="text" class="att_name" id='att_name_edit' />
+                </label>
+              </div>
+              <div class="large-4 columns">
+                <label>类
+                  <!-- <input type="text" class="att_lei" id='att_lei_edit'/> -->
+                  <select id='att_lei_edit'>
+                    <option value="单值类">单值类</option>
+                    <option value="枚举类">枚举类</option>
+                  </select>
+                </label>
+              </div>
+              <div class="large-4 columns">
+                <label>型
+                  <!-- <input type="text" class="att_xing" id='att_xing_edit' /> -->
+                  <select id='att_xing_edit'>
+                    <option value="对象型">对象型</option>
+                    <option value="字符串型">字符串型</option>
+                    <option value="日期型">日期型</option>
+                    <option value="数值型">数值型</option>
+                  </select>
+                </label>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="large-8 columns">
+                &nbsp;
+              </div>
+              <div class="large-4 columns">
+                <a href="#" class="button info" onclick="close_modal()">取消</a>
+                <a href="#" class="button success" onclick="save_node_att()">保存</a>
+              </div>
+            </div>
+          </form>
+          <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
+
+
+
+
+
+
+
+
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/vendor/fastclick.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/foundation.min.js"></script>
+        <script src="js/Tree3.js"></script>
+        <script src="js/vendor/toastr.js"></script>
+        <script src="js/vendor/d3-context-menu.js"></script>
+
+        <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+        <script>
+                $(document).foundation();
+                $(document).on('opened', '[data-reveal]', function () {
+                    var element = $(".inputName:visible").first();
+                    element.focus(function(){
+                        this.selectionStart = this.selectionEnd = this.value.length;
+                    });
+                    element.focus();
+                });
+                $('#RenameNodeName').keyup(function(e){
+                    if(e.keyCode == 13)
+                    {
+                        rename_node();
+                    }
+                });
+                $('#CreateNodeName').keyup(function(e){
+                    if(e.keyCode == 13)
+                    {
+                        create_node();
+                    }
+                });
+        </script>
+</body>
+</html>

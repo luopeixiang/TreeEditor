@@ -1,0 +1,72 @@
+.node {
+  cursor: pointer;
+}
+
+.overlay{
+    background-color:#EEE;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size:10px;
+  font-family:sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.templink {
+  fill: none;
+  stroke: red;
+  stroke-width: 3px;
+}
+
+.ghostCircle.show{
+    display:block;
+}
+
+.ghostCircle, .activeDrag .ghostCircle{
+     display: none;
+}
+
+.hidden {
+        display: none;
+}
+
+.button {
+        border: 1px solid black;
+        margin-bottom: 1px;
+  }
+#shuxing{
+  position: absolute;
+  right:0px;
+  top:0px;
+}
+/*#save_edit{
+  position: absolute;
+  bottom: -500px;
+  right:0px;
+}
+#export_json{
+  position: absolute;
+  bottom: -600px;
+  right:0px;
+}
+#import_json{
+  position: absolute;
+  bottom: -700px;
+  right:0px;
+}*/
+#options{
+  position: fixed;
+  bottom : 0px;
+  right : 0px;
+}

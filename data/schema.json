@@ -1,0 +1,195 @@
+{
+    "name": "实体",
+    "children": [
+        {
+            "name": "业务产品",
+            "children": [
+                {
+                    "name": "个人业务",
+                    "children": [
+                        {
+                            "name": "信用卡服务",
+                            "children": [
+                                {
+                                    "name": "个人款",
+                                    "attributes": [],
+                                    "_children": null
+                                },
+                                {
+                                    "name": "信用卡挂失"
+                                },
+                                {
+                                    "name": "信用卡申请"
+                                }
+                            ],
+                            "attributes": [],
+                            "_children": null
+                        },
+                        {
+                            "name": "储蓄存款",
+                            "children": [
+                                {
+                                    "name": "个人定期存款",
+                                    "attributes": []
+                                },
+                                {
+                                    "name": "个人活期存款"
+                                },
+                                {
+                                    "name": "个人通知存款"
+                                },
+                                {
+                                    "name": "住房贷款"
+                                }
+                            ],
+                            "attributes": [],
+                            "_children": null
+                        },
+                        {
+                            "name": "投资理财",
+                            "children": [
+                                {
+                                    "name": "保险"
+                                },
+                                {
+                                    "name": "债券"
+                                },
+                                {
+                                    "name": "基金"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "私人银行"
+                        },
+                        {
+                            "name": "账户服务",
+                            "children": [
+                                {
+                                    "name": "余额查询"
+                                },
+                                {
+                                    "name": "自助挂失"
+                                },
+                                {
+                                    "name": "账户申请"
+                                }
+                            ]
+                        }
+                    ],
+                    "attributes": [],
+                    "_children": null
+                },
+                {
+                    "name": "产品",
+                    "children": [
+                        {
+                            "name": "优惠活动"
+                        },
+                        {
+                            "name": "实体产品"
+                        },
+                        {
+                            "name": "软件产品"
+                        }
+                    ]
+                },
+                {
+                    "name": "对公业务",
+                    "children": [
+                        {
+                            "name": "信贷业务",
+                            "children": [
+                                {
+                                    "name": "中期信贷"
+                                },
+                                {
+                                    "name": "短期信贷"
+                                },
+                                {
+                                    "name": "长期信贷"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "单位存款",
+                            "children": [
+                                {
+                                    "name": "单位定期存款"
+                                },
+                                {
+                                    "name": "单位活期存款"
+                                },
+                                {
+                                    "name": "单位通知存款"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "结算业务",
+                            "children": [
+                                {
+                                    "name": "商业汇票"
+                                },
+                                {
+                                    "name": "汇兑"
+                                },
+                                {
+                                    "name": "银行本票"
+                                },
+                                {
+                                    "name": "银行汇票"
+                                }
+                            ]
+                        }
+                    ],
+                    "_children": null
+                }
+            ],
+            "_children": null
+        },
+        {
+            "name": "人员",
+            "children": [
+                {
+                    "name": "员工"
+                },
+                {
+                    "name": "客户"
+                }
+            ]
+        },
+        {
+            "name": "法律法规",
+            "children": [
+                {
+                    "name": "内部法规",
+                    "children": [
+                        {
+                            "name": "制度规章"
+                        },
+                        {
+                            "name": "单位公告"
+                        }
+                    ]
+                },
+                {
+                    "name": "行业法律",
+                    "children": [
+                        {
+                            "name": "商业银行法"
+                        },
+                        {
+                            "name": "银行业监督管理法"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "银行"
+        }
+    ],
+    "attributes": [],
+    "_children": null
+}
